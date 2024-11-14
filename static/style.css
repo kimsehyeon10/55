@@ -180,3 +180,25 @@ textarea:focus {
     align-self: flex-start; /* 좌측 정렬 */
     border-top-left-radius: 0;
 }
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+
+.button-group .button {
+    flex: 1;
+    margin: 0 10px;
+    padding: 12px 0;
+    text-align: center;
+    font-size: 1.1em;
+    background-color: #ff9f43;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.button-group .button:hover {
+    background-color: #ff7f3f;
+}
