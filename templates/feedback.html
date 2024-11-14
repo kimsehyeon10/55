@@ -9,36 +9,48 @@
 <body>
     <header>
         <h1>💬 GPT와의 대화</h1>
-        <a href="/" class="home-button">🏠 홈</a>
+        <a href="/" class="home-button">🏠 홈으로</a>
     </header>
     <main>
         <section id="chat-section">
             <div id="chat-box"></div>
-            <input type="text" id="user-message" placeholder="메시지를 입력하세요..." autocomplete="off">
-            <button id="send-button">전송</button>
+            <div id="input-area">
+                <input type="text" id="user-message" placeholder="메시지를 입력하세요..." autocomplete="off">
+                <button id="send-button">전송</button>
+            </div>
         </section>
     </main>
     
     <script>
         const socket = io();
 
-        document.getElementById('send-button').onclick = function() {
+        document.getElementById('send-button').onclick = sendMessage;
+
+        document.getElementById('user-message').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // 엔터로 줄바꿈 방지
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
             const userMessage = document.getElementById('user-message').value;
             if (userMessage) {
                 socket.emit('user_message', userMessage);
-                addMessageToChat("사용자", userMessage);
-                document.getElementById('user-message').value = '';
+                addMessageToChat("", userMessage, "user");
+                document.getElementById('user-message').value = ''; // 메시지 입력란 초기화
             }
-        };
+        }
 
         socket.on('bot_response', function(response) {
-            addMessageToChat("GPT", response);
+            addMessageToChat("GPT", response, "bot");
         });
 
-        function addMessageToChat(sender, message) {
+        function addMessageToChat(sender, message, type) {
             const chatBox = document.getElementById('chat-box');
-            const newMessage = document.createElement('p');
-            newMessage.textContent = `${sender}: ${message}`;
+            const newMessage = document.createElement('div');
+            newMessage.classList.add('chat-bubble', type);
+            newMessage.innerHTML = `<p class="message-content">${message}</p>`;
             chatBox.appendChild(newMessage);
             chatBox.scrollTop = chatBox.scrollHeight;
         }
