@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Diary Entry - Diary App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>📔 오늘의 일기</h1>
+        <a href="/" class="home-button">🏠 홈으로</a>
+    </header>
+    <main>
+        <section id="diary-entry-section">
+            <p class="diary-date"><strong>날짜:</strong> {{ date }}</p>
+            <form action="/diary?date={{ date }}" method="POST">
+                <textarea name="diary" rows="12" placeholder="오늘의 느낌과 생각을 적어보세요...">{{ diary.content if diary else '' }}</textarea>
+                <button type="submit" class="save-button">💾 저장하기</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

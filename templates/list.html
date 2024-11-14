@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Diary List - Diary App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>📝 일기 리스트</h1>
+        <a href="/" class="home-button">🏠 홈</a>
+    </header>
+    <main>
+        <section id="list-section">
+            {% for diary in diaries %}
+                <div class="diary-entry">
+                    <p class="diary-date">{{ diary.date }}</p>
+                    <p class="diary-content">{{ diary.content }}</p>
+                </div>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>

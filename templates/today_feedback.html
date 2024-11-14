@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Today Feedback - Diary App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>오늘의 피드백</h1>
+        <a href="/" class="home-button">🏠 홈으로</a>
+    </header>
+    <main>
+        <section id="feedback-section">
+            <p class="feedback-quote"><strong>오늘의 피드백:</strong> {{ quote }}</p>
+            {% if diary %}
+                <div class="diary-entry">
+                    <p class="diary-date">{{ diary.date }}</p>
+                    <p class="diary-content">{{ diary.content }}</p>
+                </div>
+            {% else %}
+                <p>일기가 없습니다.</p>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>

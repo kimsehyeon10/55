@@ -1,0 +1,151 @@
+/* 기본 설정 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #fef8e3;  /* 기본 배경색 */
+    color: #333;
+}
+
+header {
+    background-color: #ffbf69; /* 헤더 색상 */
+    padding: 20px;
+    text-align: center;
+    color: white;
+    border-bottom: 4px solid #ff9f43;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 2.4em;
+    font-weight: bold;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 20px;
+}
+
+/* 섹션 스타일 */
+section {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#chat-section, #diary-entry-section, #list-section {
+    background-color: #fdf1e0;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+/* 채팅박스 */
+#chat-box {
+    height: 300px;
+    overflow-y: auto;
+    border: 2px solid #ff9f43;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fffbf2;
+    border-radius: 10px;
+}
+
+#user-message {
+    width: calc(100% - 80px);
+    padding: 10px;
+    font-size: 1em;
+    border: 2px solid #ff9f43;
+    border-radius: 10px;
+}
+
+/* 버튼 스타일 */
+.button, #send-button, .save-button {
+    display: inline-block;
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1em;
+    color: white;
+    background-color: #ff9f43;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s;
+    margin: 10px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover, #send-button:hover, .save-button:hover {
+    background-color: #ff7f3f;
+    transform: scale(1.05);
+}
+
+/* 일기 입력 섹션 */
+#diary-entry-section {
+    max-width: 700px;
+    padding: 25px;
+}
+
+.diary-date {
+    font-size: 1.3em;
+    color: #ff9f43;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* 텍스트 에어리어 */
+textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 1em;
+    border: 2px solid #ff9f43;
+    border-radius: 12px;
+    resize: vertical;
+    min-height: 250px;
+    outline: none;
+    background-color: #fffbf2;
+    transition: all 0.3s ease;
+}
+
+textarea:focus {
+    border-color: #ff7f3f;
+    box-shadow: 0 0 5px rgba(255, 127, 63, 0.5);
+}
+
+
+
+/* 홈 버튼 스타일 */
+/* 홈 버튼 스타일 */
+.home-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    color: white;
+    background-color: #ff9f43;
+    text-decoration: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.home-button:hover {
+    background-color: #ff7f3f;
+    transform: scale(1.05);
+}

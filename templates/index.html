@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Diary App Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>📒 My Diary</h1>
+    </header>
+
+    <main>
+        <section id="calendar-section">
+            <h2>날짜를 선택하세요</h2>
+            <div id="calendar"></div>
+            <a href="/list" class="button">📝 일기 리스트</a>
+            <a href="/feedback" class="button">💬 전체 피드백</a>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'ko',
+                dateClick: function(info) {
+                    window.location.href = "/diary?date=" + info.dateStr;
+                }
+            });
+            calendar.render();
+        });
+    </script>
+</body>
+</html>
