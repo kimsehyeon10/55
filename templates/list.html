@@ -14,6 +14,11 @@
             font-style: normal;
             font-size:20pt
         }
+        .diary-image_url {
+            max-width: 550px;
+            height: auto;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -26,8 +31,9 @@
             {% for diary in diaries %}
                 <div class="diary-entry">
                     <p class="diary-date">{{ diary.date }}</p>
+                    <img src="{{ diary.image_url }}" alt="오늘의 피드백 이미지" class="diary-image_url">
                     <p class="diary-content">{{ diary.content }}</p>
-                    <br>
+                    <br><br>
                 </div>
             {% endfor %}
         </section>
