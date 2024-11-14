@@ -35,7 +35,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\lion1\Desktop\diary-web-app\venv"
+VIRTUAL_ENV="C:\Users\lion1\Desktop\Hack\MemorAI\diary-web-app\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
