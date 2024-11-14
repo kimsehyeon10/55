@@ -107,9 +107,19 @@ def generate_image(prompt):
     )
     return response.data[0].url
 
+def get_diary_images():
+    """일기의 날짜와 이미지 URL을 추출하여 반환"""
+    diaries = load_diaries()
+    diary_images = {}
+    for diary in diaries:
+        if 'image_url' in diary and diary['image_url']:
+            diary_images[diary['date']] = diary['image_url']
+    return diary_images
+
 @app.route('/')
 def home():
-    return render_template('index.html')
+    diary_images = get_diary_images()
+    return render_template('index.html', diary_images=diary_images)
 
 @app.route('/diary', methods=['GET', 'POST'])
 def diary():
