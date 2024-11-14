@@ -12,16 +12,11 @@ if not os.path.exists(DIARY_FILE):
     with open(DIARY_FILE, 'w', encoding='utf-8') as f:
         json.dump([], f, ensure_ascii=False, indent=4)
 
-def save_diary(diary_text, diary_date):
-    diary_entry = {
-        "date": diary_date,
-        "content": diary_text
-    }
-    
+def load_diaries():
     with open(DIARY_FILE, 'r', encoding='utf-8') as f:
-        diaries = json.load(f)
-    diaries.append(diary_entry)
-    
+        return json.load(f)
+
+def save_diaries(diaries):
     with open(DIARY_FILE, 'w', encoding='utf-8') as f:
         json.dump(diaries, f, ensure_ascii=False, indent=4)
 
@@ -31,19 +26,33 @@ def home():
 
 @app.route('/diary', methods=['GET', 'POST'])
 def diary():
+    date = request.args.get('date', '')
+    diaries = load_diaries()
+    existing_diary = next((entry for entry in diaries if entry['date'] == date), None)
+    
     if request.method == 'POST':
         diary_text = request.form['diary']
-        diary_date = request.form['date']
-        save_diary(diary_text, diary_date)
-        return redirect(url_for('feedback'))
-    return render_template('diary.html')
+        if existing_diary:
+            existing_diary['content'] = diary_text  # 기존 일기 수정
+        else:
+            new_diary = {"date": date, "content": diary_text}
+            diaries.insert(0, new_diary)  # 새 일기 추가
+        save_diaries(diaries)
+        return redirect(url_for('today_feedback', date=date))
 
-@app.route('/list')
-def diary_list():
-    with open(DIARY_FILE, 'r', encoding='utf-8') as f:
-        diaries = json.load(f)
-    diaries = sorted(diaries, key=lambda x: x['date'], reverse=True)
-    return render_template('list.html', diaries=diaries)
+    return render_template('diary.html', diary=existing_diary, date=date)
+
+@app.route('/today_feedback')
+def today_feedback():
+    selected_date = request.args.get('date', '')
+    diaries = load_diaries()
+    selected_diary = next((diary for diary in diaries if diary['date'] == selected_date), None)
+    feedback_quotes = [
+        "오늘 하루도 고생했어요!",
+        "마음이 가벼워질 거예요.",
+        "하루하루가 더 나아질 거예요."
+    ]
+    return render_template('today_feedback.html', diary=selected_diary, quote=random.choice(feedback_quotes))
 
 @app.route('/feedback')
 def feedback():

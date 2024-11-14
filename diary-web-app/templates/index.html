@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Diary App</title>
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
@@ -25,7 +24,7 @@
                 initialView: 'dayGridMonth',
                 locale: 'ko',
                 dateClick: function(info) {
-                    // 날짜 클릭 시 해당 날짜의 일기 작성 페이지로 이동
+                    // 날짜 클릭 시 해당 날짜의 일기 페이지로 이동 (추가 및 수정 가능)
                     window.location.href = "/diary?date=" + info.dateStr;
                 }
             });
