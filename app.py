@@ -58,7 +58,7 @@ def load_all_diaries(filename):
 def get_gpt_response(user_message):
     all_diaries = load_all_diaries(DIARY_FILE)
     response = openai.chat.completions.create(
-        model="gpt-4o",
+        model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": f"{system_prompt}\n\nFull diary content:\n{all_diaries}"},
             {"role": "user", "content": f"{user_message}"}
@@ -84,6 +84,16 @@ def save_message_to_json(message):
     with open(CHAT_HISTORY_FILE, 'w', encoding='utf-8') as file:
         json.dump(chat_history, file, ensure_ascii=False, indent=4)
 
+def get_gpt_feedback(content):
+    response = openai.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": content}
+        ]
+    )
+    feedback = response.choices[0].message.content
+    return feedback
 
 @app.route('/')
 def home():
@@ -124,12 +134,12 @@ def today_feedback():
     selected_date = request.args.get('date', '')
     diaries = load_diaries()
     selected_diary = next((diary for diary in diaries if diary['date'] == selected_date), None)
-    feedback_quotes = [
-        "오늘 하루도 고생했어요!",
-        "마음이 가벼워질 거예요.",
-        "하루하루가 더 나아질 거예요."
-    ]
-    return render_template('today_feedback.html', diary=selected_diary, quote=random.choice(feedback_quotes))
+    
+    if selected_diary:
+        selected_diary["feedback"] = get_gpt_feedback(selected_diary["content"])
+        save_diaries(diaries)
+
+    return render_template('today_feedback.html', diary=selected_diary, quote=selected_diary["feedback"])
 
 
 @app.route('/feedback')
