@@ -8,14 +8,48 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <style>
-        .feedback-quote,  .diary-content{
+        body {
+            font-family: "Jua", sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .main-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            max-width: 800px;
+        }
+
+        .feedback-image {
+            max-width: 200px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .feedback-quote, .diary-content {
             font-family: "Jua", sans-serif;
             font-weight: 400;
-            font-style: normal;
-            font-size:20pt;
-}
+            font-size: 20pt;
+        }
 
-
+        .diary-date {
+            font-size: 14pt;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -23,19 +57,28 @@
         <h1>오늘의 피드백</h1>
         <a href="/" class="home-button">🏠 홈으로</a>
     </header>
-    <main>
-        <section id="feedback-section">
-            <p><strong>오늘의 피드백:</strong></p>
-            <p class="feedback-quote"> {{ quote }}</p><br>
-            {% if diary %}
-                <div class="diary-entry">
-                    <p class="diary-date">{{ diary.date }}</p>
-                    <p class="diary-content">{{ diary.content }}</p>
-                </div>
-            {% else %}
-                <p>일기가 없습니다.</p>
-            {% endif %}
-        </section>
-    </main>
+
+    <!-- 이미지와 메인 콘텐츠를 담는 컨테이너 -->
+    <div class="main-container">
+        <!-- 왼쪽에 이미지 추가 -->
+        <img src="{{ image_url }}" alt="오늘의 피드백 이미지" class="feedback-image">
+
+
+        <!-- 메인 콘텐츠 영역 -->
+        <main>
+            <section id="feedback-section">
+                <p><strong>오늘의 피드백:</strong></p>
+                <p class="feedback-quote">{{ quote }}</p><br>
+                {% if diary %}
+                    <div class="diary-entry">
+                        <p class="diary-date">{{ diary.date }}</p>
+                        <p class="diary-content">{{ diary.content }}</p>
+                    </div>
+                {% else %}
+                    <p>일기가 없습니다.</p>
+                {% endif %}
+            </section>
+        </main>
+    </div>
 </body>
 </html>
