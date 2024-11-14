@@ -2,7 +2,7 @@ import json
 import openai
 
 # GPT API 키 설정 (환경 변수로 설정하거나 직접 키를 입력)
-# openai.api_key = "your_openai_api_key"
+openai.api_key = ""
 
 def load_diary(filename):
     """JSON 형식의 일기 파일을 로드하고 반환"""
@@ -22,16 +22,16 @@ def get_therapeutic_feedback(diary_entries):
         f"일기 내용:\n{diary_text}\n\n"
         "상담가로서 사용자에게 줄 피드백:"
     )
-    print(prompt)
+    
     # GPT API 호출
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are a therapist providing thoughtful, empathetic feedback on a series of diary entries."},
             {"role": "user", "content": prompt}
         ]
     )
-    feedback = response['choices'][0]['message']['content']
+    feedback = response.choices[0].message.content
     return feedback
 
 def provide_feedback(filename):
