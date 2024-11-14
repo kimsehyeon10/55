@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <title>Today Feedback - Diary App</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <style>
+        .feedback-quote,  .diary-content{
+            font-family: "Jua", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size:20pt;
+}
+
+
+    </style>
 </head>
 <body>
     <header>
@@ -12,7 +25,8 @@
     </header>
     <main>
         <section id="feedback-section">
-            <p class="feedback-quote"><strong>오늘의 피드백:</strong> {{ quote }}</p>
+            <p><strong>오늘의 피드백:</strong></p>
+            <p class="feedback-quote"> {{ quote }}</p><br>
             {% if diary %}
                 <div class="diary-entry">
                     <p class="diary-date">{{ diary.date }}</p>
