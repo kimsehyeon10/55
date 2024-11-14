@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>피드백</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>일기 피드백</h1>
+    {% if diary %}
+        <p><strong>작성한 일기:</strong> {{ diary.text }}</p>
+        <p><strong>피드백:</strong> {{ diary.feedback }}</p>
+    {% else %}
+        <p>작성한 일기가 없습니다.</p>
+    {% endif %}
+    <a href="/">돌아가기</a>
+</body>
+</html>
