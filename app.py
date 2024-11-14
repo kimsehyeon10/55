@@ -95,6 +95,18 @@ def get_gpt_feedback(content):
     feedback = response.choices[0].message.content
     return feedback
 
+def generate_image(prompt):
+    """
+    DALL·E 모델을 사용해 주어진 프롬프트를 바탕으로 이미지를 생성.
+    """
+    response = openai.images.generate(
+        prompt=prompt,
+        model="dall-e-3",
+        size="1024x1024",
+        n=1
+    )
+    return response.data[0].url
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -137,10 +149,20 @@ def today_feedback():
     
     if selected_diary:
         selected_diary["feedback"] = get_gpt_feedback(selected_diary["content"])
+        
+        # DALL·E를 사용해 일기 내용을 기반으로 이미지 생성
+        image_prompt = selected_diary["content"]
+        image_url = generate_image(image_prompt)
+        selected_diary["image_url"] = image_url
+        
         save_diaries(diaries)
 
-    return render_template('today_feedback.html', diary=selected_diary, quote=selected_diary["feedback"])
-
+    return render_template(
+        'today_feedback.html', 
+        diary=selected_diary, 
+        quote=selected_diary["feedback"], 
+        image_url=selected_diary.get("image_url", "")
+    )
 
 @app.route('/feedback')
 def feedback():
