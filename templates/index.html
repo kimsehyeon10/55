@@ -7,7 +7,6 @@
     <style>
         .calendar-image {
             width: 100%;
-            height: 60px;
             object-fit: cover;
             border-radius: 4px;
             margin-top: 4px;
@@ -25,6 +24,17 @@
         
         .fc .fc-daygrid-day-frame {
             min-height: 100px;
+        }
+        
+        .fc .fc-daygrid-day-events {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            padding: 0 !important;
+            min-height: 0 !important;
+        }
+        
+        .fc-daygrid-event-harness {
+            display: none !important;
         }
         
         header {
