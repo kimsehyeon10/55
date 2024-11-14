@@ -85,16 +85,11 @@ def save_message_to_json(message):
         json.dump(chat_history, file, ensure_ascii=False, indent=4)
 
 def get_gpt_feedback(content):
-    prompt = (
-        f"당신은 심리 상담가입니다. 아래는 사용자가 작성한 일기입니다.\n\n"
-        f"content: {content}\n\n"
-        "사용자가 기분을 더 좋게 느낄 수 있도록 공감과 조언을 담은 feedback을 제공해주세요."
-    )
     response = openai.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": "You are a therapist providing empathetic feedback on diary entries."},
-            {"role": "user", "content": prompt}
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": content}
         ]
     )
     feedback = response.choices[0].message.content
