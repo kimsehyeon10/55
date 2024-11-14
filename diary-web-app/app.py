@@ -17,10 +17,15 @@ if not os.path.exists(DIARY_FILE):
         json.dump([], f, ensure_ascii=False, indent=4)
 
 def load_diaries():
-    with open(DIARY_FILE, 'r', encoding='utf-8') as f:
-        return json.load(f)
+    """diaries.json 파일에서 일기 데이터를 불러옴"""
+    if os.path.exists(DIARY_FILE):
+        with open(DIARY_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    else:
+        return []
 
 def save_diaries(diaries):
+    """일기 데이터를 diaries.json에 저장"""
     with open(DIARY_FILE, 'w', encoding='utf-8') as f:
         json.dump(diaries, f, ensure_ascii=False, indent=4)
 
@@ -34,6 +39,27 @@ def get_gpt_response(user_message):
     )
     return response.choices[0].message.content
 
+def save_message_to_json(message):
+    """GPT의 응답을 JSON 파일에 저장하며, 최신 응답이 최상단에 위치하도록 저장"""
+    chat_entry = {"sender": "GPT", "message": message}
+    
+    # 기존 메시지 불러오기
+    if os.path.exists(CHAT_HISTORY_FILE):
+        with open(CHAT_HISTORY_FILE, 'r', encoding='utf-8') as file:
+            chat_history = json.load(file)
+    else:
+        chat_history = []
+    
+    # 최신 메시지를 0번째 위치에 추가
+    chat_history.insert(0, chat_entry)
+    
+    # JSON 파일에 저장
+    with open(CHAT_HISTORY_FILE, 'w', encoding='utf-8') as file:
+        json.dump(chat_history, file, ensure_ascii=False, indent=4)
+
+
+
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -42,18 +68,24 @@ def home():
 def diary():
     date = request.args.get('date', '')
     diaries = load_diaries()
-    existing_diary = next((entry for entry in diaries if entry['date'] == date), None)
     
     if request.method == 'POST':
         diary_text = request.form['diary']
-        if existing_diary:
-            existing_diary['content'] = diary_text
-        else:
-            new_diary = {"date": date, "content": diary_text}
-            diaries.insert(0, new_diary)
+        
+        # 같은 날짜의 기존 데이터를 삭제
+        diaries = [entry for entry in diaries if entry['date'] != date]
+        
+        # 수정된 데이터를 최상단에 추가
+        new_entry = {"date": date, "content": diary_text}
+        diaries.insert(0, new_entry)
+        
+        # 저장
         save_diaries(diaries)
+        
         return redirect(url_for('today_feedback', date=date))
 
+    # GET 요청 시 현재 날짜에 해당하는 일기 데이터를 가져옴
+    existing_diary = next((entry for entry in diaries if entry['date'] == date), None)
     return render_template('diary.html', diary=existing_diary, date=date)
 
 @app.route('/list')
@@ -75,7 +107,9 @@ def today_feedback():
     return render_template('today_feedback.html', diary=selected_diary, quote=random.choice(feedback_quotes))
 
 
-openai.api_key = ''
+#openai.api_key = ''
+# JSON 파일 경로 설정
+CHAT_HISTORY_FILE = 'chat_history.json'
 
 DIARY_FILE = 'diaries.json'
 
@@ -117,6 +151,8 @@ def feedback():
 @socketio.on('user_message')
 def handle_user_message(user_message):
     gpt_response = get_gpt_response(user_message)
+    # GPT 응답을 JSON 파일에 저장
+    save_message_to_json(gpt_response)
     emit('bot_response', gpt_response)
 
 if __name__ == '__main__':
