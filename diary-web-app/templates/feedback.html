@@ -10,6 +10,9 @@
         <h1>전체 피드백</h1>
     </header>
     <main>
+        <section id="feedback-quote-section">
+            <p class="feedback-quote"><strong>명언:</strong> {{ quote }}</p>
+        </section>
         <section id="feedback-list-section">
             {% for diary in diaries %}
                 <div class="diary-entry">
@@ -17,7 +20,6 @@
                     <p class="diary-content">{{ diary.content }}</p>
                 </div>
             {% endfor %}
-            <p class="feedback-quote"><strong>명언:</strong> {{ quote }}</p>
         </section>
     </main>
 </body>

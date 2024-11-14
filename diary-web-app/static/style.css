@@ -27,61 +27,55 @@ header h1 {
 
 main {
     flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 20px;
-    max-width: 800px;
-    width: 100%;
-    margin: auto;
 }
 
-#diary-section, #list-section, #feedback-section, #feedback-list-section {
+#diary-entry-section {
     background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .diary-date {
-    font-size: 1.1em;
-    font-weight: bold;
+    font-size: 1.2em;
     color: #4a90e2;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
-.diary-content {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #f1f1f1;
-    border-radius: 5px;
-    white-space: pre-wrap;
+textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    resize: vertical;
+    min-height: 200px;
+    outline: none;
+    transition: border-color 0.3s;
 }
 
-.no-diary {
-    color: #999;
-    text-align: center;
-    font-style: italic;
-}
-
-.feedback-quote {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #eef;
-    border-radius: 5px;
-    text-align: center;
-    color: #4a90e2;
-    font-style: italic;
+textarea:focus {
+    border-color: #4a90e2;
 }
 
 .submit-button {
     width: 100%;
-    padding: 12px;
-    font-size: 1.1em;
+    padding: 15px;
+    font-size: 1.2em;
     color: white;
     background-color: #4a90e2;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
+    transition: background-color 0.3s;
+    margin-top: 20px;
 }
 
 .submit-button:hover {
