@@ -10,8 +10,26 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key'
 socketio = SocketIO(app)
 
-DIARY_FILE = 'diaries.json'
+# JSON 파일 경로 설정
+CHAT_HISTORY_FILE = 'chat_history.json'
 
+openai.api_key = ''
+
+system_prompt = """
+You are a compassionate and insightful friend providing personalized feedback based on the user's diary entries. Speak in a warm, friendly, and conversational tone, offering advice and support as a close friend would. 
+Go beyond general or typical advice by tailoring your words closely to the unique details and emotions in the user's entries. 
+Your feedback should:
+- Celebrate the user's positive experiences with genuine joy and personal remarks, encouraging them to savor these moments.
+- Offer focused guidance and specific advice that acknowledges the nuances of their challenges, as a supportive friend would.
+- Provide comforting words and understanding during difficult times, speaking to them in a way that feels relatable and reassuring.
+- Suggest practical stress-relief techniques or coping strategies directly relevant to their shared struggles and daily life, as if sharing helpful tips from your own experience.
+
+Make the user feel genuinely understood, speaking in a friendly, non-judgmental way, as though you are a friend who truly cares about their well-being. Let each response feel like it’s crafted just for them, providing warm, thoughtful support on their personal journey. Keep responses concise and limit them to 4 sentences.
+Please make sure to say it in Korean.
+"""
+
+
+DIARY_FILE = 'diaries.json'
 if not os.path.exists(DIARY_FILE):
     with open(DIARY_FILE, 'w', encoding='utf-8') as f:
         json.dump([], f, ensure_ascii=False, indent=4)
@@ -29,12 +47,21 @@ def save_diaries(diaries):
     with open(DIARY_FILE, 'w', encoding='utf-8') as f:
         json.dump(diaries, f, ensure_ascii=False, indent=4)
 
+def load_all_diaries(filename):
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            diary_entries = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return ""
+    return "\n".join([f"date: {entry['date']}\ncontent: {entry['content']}" for entry in diary_entries])
+
 def get_gpt_response(user_message):
+    all_diaries = load_all_diaries(DIARY_FILE)
     response = openai.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4o",
         messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": user_message}
+            {"role": "system", "content": f"{system_prompt}\n\nFull diary content:\n{all_diaries}"},
+            {"role": "user", "content": f"{user_message}"}
         ]
     )
     return response.choices[0].message.content
@@ -56,8 +83,6 @@ def save_message_to_json(message):
     # JSON 파일에 저장
     with open(CHAT_HISTORY_FILE, 'w', encoding='utf-8') as file:
         json.dump(chat_history, file, ensure_ascii=False, indent=4)
-
-
 
 
 @app.route('/')
@@ -106,41 +131,6 @@ def today_feedback():
     ]
     return render_template('today_feedback.html', diary=selected_diary, quote=random.choice(feedback_quotes))
 
-
-openai.api_key = ''
-
-DIARY_FILE = 'diaries.json'
-
-if not os.path.exists(DIARY_FILE):
-    with open(DIARY_FILE, 'w', encoding='utf-8') as f:
-        json.dump([], f, ensure_ascii=False, indent=4)
-
-def load_all_diaries(filename):
-    try:
-        with open(filename, 'r', encoding='utf-8') as f:
-            diary_entries = json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return ""
-    return "\n".join([f"date: {entry['date']}\ncontent: {entry['content']}" for entry in diary_entries])
-
-def start_chat_with_gpt(diary_content):
-    messages = [
-        {"role": "system", "content": "You are a therapist providing empathetic feedback based on diary entries."},
-        {"role": "user", "content": f"사용자가 작성한 일기: {diary_content}"}
-    ]
-    
-    @socketio.on('user_message')
-    def handle_user_message(user_message):
-        messages.append({"role": "user", "content": user_message})
-        response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=messages
-        )
-        
-        assistant_response = response.choices[0].message.content
-        messages.append({"role": "assistant", "content": assistant_response})
-        
-        emit('bot_response', assistant_response)  # 클라이언트에 assistant_response 전송
 
 @app.route('/feedback')
 def feedback():
