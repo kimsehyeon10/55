@@ -2,19 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Feedback - Diary App</title>
+    <title>Diary List - Diary App</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>전체 피드백</h1>
+    <h1>일기 리스트</h1>
     {% for diary in diaries %}
-        <div class="feedback-entry">
+        <div class="diary-entry">
             <p><strong>날짜:</strong> {{ diary.date }}</p>
             <p><strong>내용:</strong> {{ diary.content }}</p>
         </div>
     {% endfor %}
-    <div class="quote">
-        <p><strong>명언:</strong> {{ quote }}</p>
-    </div>
 </body>
 </html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Write Diary - Diary App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>일기 작성</h1>
+    <form action="/diary" method="POST">
+        <!-- URL에서 날짜 파라미터를 받아와 표시 -->
+        <input type="hidden" name="date" value="{{ request.args.get('date', '') }}">
+        <p><strong>날짜:</strong> {{ request.args.get('date', '') }}</p>
+        <textarea name="diary" rows="10" cols="50" placeholder="오늘의 느낌을 적어보세요."></textarea><br>
+        <button type="submit">일기 제출하기</button>
+    </form>
+</body>
+</html>
