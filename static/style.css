@@ -10,17 +10,17 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #fef8e3;
-    color: #333;
+    background-color: #ffffff; /* 배경색을 흰색으로 변경 */
+    color: #555; /* 텍스트 색상 변경 */
 }
 
 header {
-    background-color: #ffbf69;
+    background-color: #e0e0e0; /* 밝은 회색으로 변경 */
     padding: 20px;
     text-align: center;
-    color: white;
-    border-bottom: 4px solid #ff9f43;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
+    border-bottom: 4px solid #cccccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 header h1 {
@@ -38,16 +38,16 @@ main {
 
 /* 공통 섹션 스타일 */
 section {
-    background-color: #fff;
+    background-color: #f9f9f9; /* 섹션 배경을 밝은 회색으로 변경 */
     border-radius: 15px;
     padding: 20px;
     width: 100%;
     max-width: 600px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 #chat-section {
-    background-color: #fdf1e0;
+    background-color: #f5f5f5;
     padding: 20px;
     border-radius: 15px;
 }
@@ -56,14 +56,14 @@ section {
     width: 100%;
     height: 400px;
     overflow-y: auto;
-    background-color: #fffbf2;
+    background-color: #fdfdfd; /* 채팅 상자 배경을 밝게 변경 */
     padding: 15px;
-    border: 2px solid #ff9f43;
+    border: 2px solid #e0e0e0;
     border-radius: 15px;
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
-    gap: 10px; /* 각 메시지 사이의 간격 */
+    gap: 10px;
 }
 
 #input-area {
@@ -75,9 +75,10 @@ section {
     flex: 1;
     padding: 10px;
     font-size: 1em;
-    border: 2px solid #ff9f43;
+    border: 2px solid #cccccc;
     border-radius: 10px;
     margin-right: 10px;
+    background-color: #fff;
 }
 
 /* 버튼 스타일 */
@@ -85,8 +86,8 @@ section {
     display: inline-block;
     padding: 12px;
     font-size: 1.1em;
-    color: white;
-    background-color: #ff9f43;
+    color: #333;
+    background-color: #e0e0e0;
     text-align: center;
     text-decoration: none;
     border-radius: 10px;
@@ -94,11 +95,11 @@ section {
     border: none;
     transition: background-color 0.3s ease, transform 0.2s;
     margin: 10px 0;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .button:hover, #send-button:hover, .save-button:hover {
-    background-color: #ff7f3f;
+    background-color: #cccccc;
     transform: scale(1.05);
 }
 
@@ -109,17 +110,17 @@ section {
     right: 20px;
     padding: 10px 20px;
     font-size: 1.1em;
-    color: white;
-    background-color: #ff9f43;
+    color: #333;
+    background-color: #e0e0e0;
     text-decoration: none;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     font-weight: bold;
     transition: background-color 0.3s, transform 0.2s;
 }
 
 .home-button:hover {
-    background-color: #ff7f3f;
+    background-color: #cccccc;
     transform: scale(1.05);
 }
 
@@ -131,7 +132,7 @@ section {
 
 .diary-date {
     font-size: 1.3em;
-    color: #ff9f43;
+    color: #555;
     margin-bottom: 15px;
     font-weight: bold;
 }
@@ -141,18 +142,18 @@ textarea {
     width: 100%;
     padding: 15px;
     font-size: 1em;
-    border: 2px solid #ff9f43;
+    border: 2px solid #cccccc;
     border-radius: 12px;
     resize: vertical;
     min-height: 250px;
-    outline: none;
-    background-color: #fffbf2;
+    outline: 3px solid #ff7f3f;
+    background-color: #f9f9f9;
     transition: all 0.3s ease;
 }
 
 textarea:focus {
-    border-color: #ff7f3f;
-    box-shadow: 0 0 5px rgba(255, 127, 63, 0.5);
+    border-color: #aaaaaa;
+    box-shadow: 0 0 5px rgba(170, 170, 170, 0.5);
 }
 
 /* 채팅 말풍선 스타일 */
@@ -162,21 +163,21 @@ textarea:focus {
     border-radius: 10px;
     font-size: 1em;
     line-height: 1.4;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05);
     word-wrap: break-word;
 }
 
 .chat-bubble.user {
-    background-color: #e0ffe4;
+    background-color: #f0f7ff;
     color: #333;
-    align-self: flex-end; /* 우측 정렬 */
+    align-self: flex-end;
     border-top-right-radius: 0;
-    text-align: right; /* 텍스트 우측 정렬 */
+    text-align: right;
 }
 
 .chat-bubble.bot {
-    background-color: #e0eaff;
+    background-color: #f0f0f0;
     color: #333;
-    align-self: flex-start; /* 좌측 정렬 */
+    align-self: flex-start;
     border-top-left-radius: 0;
 }
