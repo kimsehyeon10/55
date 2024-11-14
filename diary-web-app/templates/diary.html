@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Write Diary - Diary App</title>
+    <title>Write or Edit Diary - Diary App</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>일기 작성 및 수정</h1>
-    <form action="/diary?date={{ date }}" method="POST">
-        <p><strong>날짜:</strong> {{ date }}</p>
-        <textarea name="diary" rows="10" cols="50" placeholder="오늘의 느낌을 적어보세요.">{{ diary.content if diary else '' }}</textarea><br>
-        <button type="submit">{{ '수정하기' if diary else '추가하기' }}</button>
-    </form>
-    <a href="/">홈으로 돌아가기</a>
+    <header>
+        <h1>일기 작성 및 수정</h1>
+    </header>
+    <main>
+        <section id="diary-section">
+            <p class="diary-date">날짜: <strong>{{ date }}</strong></p>
+            <form action="/diary?date={{ date }}" method="POST">
+                <textarea name="diary" rows="12" placeholder="오늘의 느낌을 적어보세요...">{{ diary.content if diary else '' }}</textarea>
+                <button type="submit" class="submit-button">{{ '수정하기' if diary else '추가하기' }}</button>
+            </form>
+        </section>
+    </main>
 </body>
 </html>

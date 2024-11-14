@@ -1,20 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Home - Diary App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diary App Home</title>
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Diary App Home</h1>
-    <div id="calendar-container">
-        <div id="calendar"></div>
-    </div>
-    <div id="buttons">
-        <a href="/list" class="button" id="list-button">일기 리스트</a>
-        <a href="/feedback" class="button" id="feedback-button">전체 피드백</a>
-    </div>
+    <header>
+        <h1>My Diary</h1>
+    </header>
+
+    <main>
+        <div id="content-wrapper">
+            <section id="calendar-section">
+                <div id="calendar"></div>
+            </section>
+            <section id="actions">
+                <a href="/list" class="action-button">일기 리스트</a>
+                <a href="/feedback" class="action-button">전체 피드백</a>
+                <p class="instructions">날짜를 클릭해 일기를 작성하거나 수정하세요.</p>
+            </section>
+        </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
     <script>
@@ -24,7 +33,6 @@
                 initialView: 'dayGridMonth',
                 locale: 'ko',
                 dateClick: function(info) {
-                    // 날짜 클릭 시 해당 날짜의 일기 페이지로 이동 (추가 및 수정 가능)
                     window.location.href = "/diary?date=" + info.dateStr;
                 }
             });

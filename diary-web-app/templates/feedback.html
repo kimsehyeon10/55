@@ -1,21 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>All Feedback - Diary App</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>전체 피드백</h1>
-    {% for diary in diaries %}
-        <div class="feedback-entry">
-            <p><strong>날짜:</strong> {{ diary.date }}</p>
-            <p><strong>내용:</strong> {{ diary.content }}</p>
-        </div>
-    {% endfor %}
-    <div class="quote">
-        <p><strong>명언:</strong> {{ quote }}</p>
-    </div>
-    <a href="/">홈으로 돌아가기</a>
+    <header>
+        <h1>전체 피드백</h1>
+    </header>
+    <main>
+        <section id="feedback-list-section">
+            {% for diary in diaries %}
+                <div class="diary-entry">
+                    <p class="diary-date">{{ diary.date }}</p>
+                    <p class="diary-content">{{ diary.content }}</p>
+                </div>
+            {% endfor %}
+            <p class="feedback-quote"><strong>명언:</strong> {{ quote }}</p>
+        </section>
+    </main>
 </body>
 </html>
