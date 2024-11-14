@@ -146,7 +146,7 @@ textarea {
     border-radius: 12px;
     resize: vertical;
     min-height: 250px;
-    outline: 3px solid #ff7f3f;
+    outline: none;
     background-color: #f9f9f9;
     transition: all 0.3s ease;
 }
