@@ -1,6 +1,34 @@
 from flask import Flask, render_template, request, redirect, url_for
+from datetime import datetime
+import json
+import os
 
 app = Flask(__name__)
+
+# JSON 파일 경로
+DIARY_FILE = 'diaries.json'
+
+# 기존에 파일이 없다면 빈 리스트로 초기화
+if not os.path.exists(DIARY_FILE):
+    with open(DIARY_FILE, 'w', encoding='utf-8') as f:
+        json.dump([], f, ensure_ascii=False, indent=4)
+
+# 일기를 JSON 파일에 저장하는 함수
+def save_diary(diary_text):
+    # 현재 날짜와 일기 내용 생성
+    diary_entry = {
+        "date": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        "content": diary_text
+    }
+    
+    # 기존 파일에서 데이터를 읽어와서 새로운 일기를 추가한 후 다시 저장
+    with open(DIARY_FILE, 'r', encoding='utf-8') as f:
+        diaries = json.load(f)
+    diaries.append(diary_entry)
+    
+    # 업데이트된 데이터를 UTF-8 인코딩으로 파일에 저장
+    with open(DIARY_FILE, 'w', encoding='utf-8') as f:
+        json.dump(diaries, f, ensure_ascii=False, indent=4)
 
 # 일기 데이터를 저장하는 간단한 리스트 (DB 대체용)
 diaries = []
@@ -12,6 +40,7 @@ def index():
         diary_text = request.form['diary']
         feedback = generate_feedback(diary_text)
         diaries.append({"text": diary_text, "feedback": feedback})
+        save_diary(diary_text)  # 일기 내용을 JSON 파일에 저장
         return redirect(url_for('feedback'))
     return render_template('index.html')
 
