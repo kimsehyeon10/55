@@ -10,12 +10,12 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #fef8e3;  /* 기본 배경색 */
+    background-color: #fef8e3;
     color: #333;
 }
 
 header {
-    background-color: #ffbf69; /* 헤더 색상 */
+    background-color: #ffbf69;
     padding: 20px;
     text-align: center;
     color: white;
@@ -36,7 +36,7 @@ main {
     padding: 20px;
 }
 
-/* 섹션 스타일 */
+/* 공통 섹션 스타일 */
 section {
     background-color: #fff;
     border-radius: 15px;
@@ -46,35 +46,43 @@ section {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-#chat-section, #diary-entry-section, #list-section {
+#chat-section {
     background-color: #fdf1e0;
     padding: 20px;
     border-radius: 15px;
 }
 
-/* 채팅박스 */
 #chat-box {
-    height: 300px;
+    width: 100%;
+    height: 400px;
     overflow-y: auto;
-    border: 2px solid #ff9f43;
-    padding: 10px;
-    margin-bottom: 10px;
     background-color: #fffbf2;
-    border-radius: 10px;
+    padding: 15px;
+    border: 2px solid #ff9f43;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* 각 메시지 사이의 간격 */
+}
+
+#input-area {
+    display: flex;
+    width: 100%;
 }
 
 #user-message {
-    width: calc(100% - 80px);
+    flex: 1;
     padding: 10px;
     font-size: 1em;
     border: 2px solid #ff9f43;
     border-radius: 10px;
+    margin-right: 10px;
 }
 
 /* 버튼 스타일 */
 .button, #send-button, .save-button {
     display: inline-block;
-    width: 100%;
     padding: 12px;
     font-size: 1.1em;
     color: white;
@@ -90,6 +98,27 @@ section {
 }
 
 .button:hover, #send-button:hover, .save-button:hover {
+    background-color: #ff7f3f;
+    transform: scale(1.05);
+}
+
+/* 홈 버튼 스타일 */
+.home-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 1.1em;
+    color: white;
+    background-color: #ff9f43;
+    text-decoration: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.home-button:hover {
     background-color: #ff7f3f;
     transform: scale(1.05);
 }
@@ -126,26 +155,28 @@ textarea:focus {
     box-shadow: 0 0 5px rgba(255, 127, 63, 0.5);
 }
 
-
-
-/* 홈 버튼 스타일 */
-/* 홈 버튼 스타일 */
-.home-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    font-size: 1.1em;
-    color: white;
-    background-color: #ff9f43;
-    text-decoration: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-weight: bold;
-    transition: background-color 0.3s, transform 0.2s;
+/* 채팅 말풍선 스타일 */
+.chat-bubble {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 1em;
+    line-height: 1.4;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
 }
 
-.home-button:hover {
-    background-color: #ff7f3f;
-    transform: scale(1.05);
+.chat-bubble.user {
+    background-color: #e0ffe4;
+    color: #333;
+    align-self: flex-end; /* 우측 정렬 */
+    border-top-right-radius: 0;
+    text-align: right; /* 텍스트 우측 정렬 */
+}
+
+.chat-bubble.bot {
+    background-color: #e0eaff;
+    color: #333;
+    align-self: flex-start; /* 좌측 정렬 */
+    border-top-left-radius: 0;
 }
